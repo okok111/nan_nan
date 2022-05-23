@@ -7,6 +7,7 @@ class PostsController < ApplicationController
         @q = Post.ransack(params[:q])
         @posts= @q.result
         @post = Post.new
+        
     end
 
     def new
