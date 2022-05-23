@@ -1,0 +1,139 @@
+<div class="user-show">
+    <h1>ユーザー情報</h1>
+    <p>ユーザーネーム : <%= @user.name %></p>
+    <p>メールアドレス : <%= @user.email %></p>
+    <p>プロフィール : <%= @user.profile %></p>
+        <% unless @user.id == current_user.id %>
+            <% if @isRoom == true %>
+                <p><%= link_to 'この人とインド料理について語り合う！！', room_path(@roomId) ,calss:""%></p>
+            <% else %>
+                <%= form_for @room do |f| %>
+                    <%= fields_for @entry do |e|%>
+                        <% e.hidden_field :user_id, value: @user.id %>
+                    <% end %>
+                <%= f.submit "DMを開始する"%>
+                <% end %>
+            <% end %>
+        <% end %>
+    <% if current_user.id == @user.id %>
+        <%= link_to "編集する", edit_user_registration_path %>
+    <% end %>
+
+</div>
+<hr>
+
+<h1>このユーザーの投稿</h1>
+<div class="posts-container">
+    <% @user.posts.each do |t| %>
+        <div class="post">
+            UserName:<a href="/users/<%= t.user.id %>"><%= t.user.name %></a>
+            <% if t.title.blank? %>
+                <p>店名：登録なし</p>
+            <% else %>
+                <p>店名：<%= t.title %></p>
+            <% end %>
+            <!--カルーセルここから-->
+                <div id="carouselExampleIndicators" class="carousel slide yokobou" data-ride="carousel" data-interval="2000" >
+                <ol class="carousel-indicators yokobou">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active yokobou"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1" class=" yokobou"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2" class=" yokobou"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="img-img">
+                        <% if t.image.present? %>
+                            <%= image_tag t.image_url, size: '250x200'%>
+                        <% else %>
+                            <%= image_tag "nonono.png", size: '250x200' %>
+                        <% end %>
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="img-img">
+                        <% if t.nann == "ノーマル" %>
+                            <%= image_tag "naan.jpg", size: '250x200' %>
+                        <% elsif t.nann == "チーズ" %>
+                            <%= image_tag "cheese.jpg", size: '250x200' %>
+                        <% elsif t.nann == "チャパティ" %>
+                            <%= image_tag "chapa.jpg", size: '250x200' %>
+                        <% else %>
+                            <%= image_tag "nodata.png", size: '250x200' %>
+                        <% end %>
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="karasa">
+                            <p>辛さレベル</p>
+                            <% if t.spice == "甘口" %>
+                                <%= image_tag "11.png" , size: '250x100'%>
+                            <% elsif t.spice == "チョイ辛" %>
+                                <%= image_tag "22.png", size: '250x100' %>
+                            <% elsif t.spice == "中辛" %>
+                                <%= image_tag "33.png", size: '250x100' %>
+                            <% elsif t.spice == "辛口" %>
+                                <%= image_tag "44.png", size: '250x100' %>
+                            <% elsif t.spice == "激辛" %>
+                                <%= image_tag "55.png", size: '250x100' %>
+                            <% else %>
+                                <p>データなし</p>
+                                <p>食べてからのお楽しみ！</p>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <!--ここまで-->
+            <% if user_signed_in? %>
+                <% if current_user.already_liked?(t) %>
+                    <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+                        <i class="fas fa-heart fa-2x"></i><%= t.likes.count %>
+                    <% end %>
+                <% else %>
+                    <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+                        <i class="far fa-heart fa-2x"></i><%= t.likes.count %>
+                    <% end %>
+                <% end %>
+            <% else %>
+                <i class="far fa-heart fa-2x"></i><%= t.likes.count %>
+            <% end %>
+            <p>
+                <%= t.price %>
+                <%= t.curry %>
+            </p>
+            <p>
+                <% if t.title.blank? %>
+                    ナンおかわり：不明
+                <% else %>
+                    ナンおかわり：<%= t.drink %>
+                <% end %>
+            </p>
+            <%= link_to post_path(t.id) do %>
+                <i class="fas fa-arrow-circle-right fa-2x"></i>
+            <% end %>
+            <% if user_signed_in? && current_user.id == t.user_id %>
+                <%= link_to post_path(t.id), method: :delete do %>
+                    <i class="fas fa-trash fa-2x"></i>
+                <% end %>
+            <% end %>
+        </div>
+    <% end %>
+</div>
+
+
+<style>
+h1{
+    text-align:center;
+}
+.user-in{
+    width:300px;
+    padding:10px;
+    margin:10px;
+    text-align:center;
+    border:1px solid darkgray;
+    background-color:gainsboro;
+}
+.user-show{
+    text-align:center;
+}
+</style>

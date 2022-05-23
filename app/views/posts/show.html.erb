@@ -1,0 +1,111 @@
+    <div class="post-show">
+            <% if @post.title.blank? %>
+                <p>店名：登録なし</p>
+            <% else %>
+                <p>店名：<%= @post.title %></p>
+            <% end %>
+            <!--カルーセルここから-->
+                <div id="carouselExampleIndicators" class="carousel slide yokobou" data-ride="carousel" data-interval="999999" >
+                <ol class="carousel-indicators yokobou">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active yokobou"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1" class=" yokobou"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2" class=" yokobou"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="img-img">
+                        <% if @post.image.present? %>
+                            <%= image_tag @post.image_url, size: '250x200'%>
+                        <% else %>
+                            <%= image_tag "nonono.png", size: '250x200' %>
+                        <% end %>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="img-img">
+                        <% if @post.nann == "ノーマル" %>
+                            <%= image_tag "naan.jpg", size: '250x200' %>
+                        <% elsif @post.nann == "チーズ" %>
+                            <%= image_tag "cheese.jpg", size: '250x200' %>
+                        <% elsif @post.nann == "チャパティ" %>
+                            <%= image_tag "chapa.jpg", size: '250x200' %>
+                        <% else %>
+                            <%= image_tag "nodata.png", size: '250x200' %>
+                        <% end %>
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="karasa">
+                            <% if @post.spice == "甘口" %>
+                                <%= image_tag "11.png" , size: '250x100'%>
+                            <% elsif @post.spice == "チョイ辛" %>
+                                <%= image_tag "22.png", size: '250x100' %>
+                            <% elsif @post.spice == "中辛" %>
+                                <%= image_tag "33.png", size: '250x100' %>
+                            <% elsif @post.spice == "辛口" %>
+                                <%= image_tag "44.png", size: '250x100' %>
+                            <% elsif @post.spice == "激辛" %>
+                                <%= image_tag "55.png", size: '250x100' %>
+                            <% else %>
+                                <%= image_tag "nodata.png", size: '250x200' %>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon yahidari" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon yamigi" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+                </div>
+            <!--ここまで-->
+            <% if user_signed_in? %>
+                <% if current_user.already_liked?(@post) %>
+                    <%= link_to post_like_path(id: @post.id, post_id: @post.id), method: :delete do %>
+                        <i class="fas fa-heart"></i><%= @post.likes.count %>
+                    <% end %>
+                <% else %>
+                    <%= link_to post_likes_path(id: @post.id, post_id: @post.id), method: :post do %>
+                        <i class="far fa-heart"></i><%= @post.likes.count %>
+                    <% end %>
+                <% end %>
+            <% else %>
+                <i class="far fa-heart"></i><%= @post.likes.count %>
+            <% end %>
+            <p>
+                <%= @post.price %>
+                <%= @post.curry %>
+            </p>
+            <p>
+                <% if @post.drink.blank? %>
+                    ナンおかわり：不明
+                <% else %>
+                    ナンおかわり：<%= @post.drink %>
+                <% end %>
+            </p>
+            <p>ひとこと：<%= @post.contents %></p>
+            <%= link_to "編集する", edit_post_path(@post.id) %>
+        </div> 
+    <div class="comment-wrapper">
+        <% if user_signed_in? %>
+            <%= form_with(model: [@post, @comment], local: true) do |f| %>
+                <%= f.text_area :content %>
+                <%= button_tag type: "submit" do %>
+                    <i class="far fa-comments"></i> コメントする
+                <% end %>
+            <% end %>
+        <% end %>
+        <p>コメント一覧</p>
+        <% @comments.each do |c| %>
+            <div>
+            <%= c.user.email unless c.user.blank? %>
+            <br>
+            <%= c.content %>
+            </div>
+            <br>
+        <% end %>
+    </div>
+

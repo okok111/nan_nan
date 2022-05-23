@@ -1,0 +1,67 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ @import url('https://fonts.googleapis.com/css2?family=Hachi+Maru+Pop&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    font-family: 'Hachi Maru Pop', cursive;
+    z-index: 10;
+    background-color: #b69f48;
+}
+header a{
+    color: brown;
+}
+header h1{
+    margin-left: 20px;
+    font-family: 'Hachi Maru Pop', cursive;
+    font-style: italic;
+}
+
+header a{
+    text-decoration: none;
+}
+header a:hover{
+    color: rgba(165, 42, 42, 0.811);
+    font-size: 97%;
+}
+header a:hover{
+    text-decoration: none;
+}
+.navblock{
+    display: flex;
+    margin-right: 30px;
+}
+
+.iconpp{
+    text-align: center;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+main{
+    margin-top: 80px;
+    background-color: #fde09a;
+    min-height: 100vh;
+}

@@ -1,0 +1,39 @@
+<div class="room-show">
+<div class="user-in">
+    <% @entries.each do |e| %>
+        <% unless e.user.name.blank? %>
+            <h3><strong><a href="/users/<%= e.user.id %>"><%= e.user.name %></a></strong>さん</h3>
+        <% else %>
+            <h3><strong><a href="/users/<%= e.user.id %>"><%= e.user.email %></a></strong>さん</h3>
+        <% end %>
+    <% end %>
+    <p>熱々のカレートークをしましょう！</p>
+</div>
+
+<div class="dmMain">
+    <% @messages.each do |m| %>
+        <% if m.user.name == current_user.name %>
+            <div class="mymessage">
+                <strong><%= m.body %></strong><br>
+                あなた<hr>
+            </div>
+        <% else %>
+            <strong><%= m.body %></strong><br>
+            <%= m.user.name %>さん<hr>
+        <% end %>
+    <% end %>
+</div>
+
+<div class="dmpost">
+    <%= form_for @message do |f| %>
+        <%= f.text_field :body, :placeholder => "メッセージを入力して下さい" , :size => 50 %>
+        <%= f.hidden_field :room_id, :value => @room.id %>
+        <%= f.submit "送信する" %>
+    <% end %>
+</div>
+</div>
+
+
+
+
+

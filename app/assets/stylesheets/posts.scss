@@ -1,0 +1,153 @@
+// Place all the styles related to the posts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.img-img{
+    width: 250px;
+    height: 200px;
+    margin: 0 auto;
+}
+.karasa{
+    text-align: center;
+    width: 250px;
+    height: 200px;
+    padding-top: 50px;
+    margin: 0 auto;
+}
+.yamigi{
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%6fe2e7' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e");
+}
+.yahidari{
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%6fe2e7' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3e%3c/svg%3e");
+}
+
+$carousel-indicator-length: 10px;
+.carousel-indicators {
+  & li {
+    border-radius: 50%;
+    margin: 1px 3px;
+    height: $carousel-indicator-length;
+    max-width: $carousel-indicator-length;
+    background-color: #000;
+  }
+}
+.comment-wrapper{
+    text-align: center;
+}
+
+.post-show{
+    width: 25%;
+    margin: 0 auto;
+    padding-top: 40px;
+}
+
+.posts-container{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 90%;
+    margin: 0 auto;
+}
+
+.posts-container::after{
+    content: "";
+    width: 30%;
+}
+.posts-container::before{
+    content: "";
+    width: 30%;
+    order: 1;
+}
+
+.post{
+    border-radius: 5px;
+    padding: 10px;
+    width: 30%;
+    margin-top: 15px;
+    box-shadow: 5px 4px 4px 3px rgb(97, 89, 89);
+    background-color: #b69f48;
+}
+.ss-post{
+    padding-top: 100px;
+    text-align: center;
+}
+.btnsize{
+    width: 150px;
+    height: 100px;
+    animation-name: aniani;
+	animation-duration: 2s;
+	animation-iteration-count: infinite;
+}
+@keyframes aniani{
+    0% {
+		border-radius:30px 20px 30px 20px ;
+        background-color: #fff;
+        font-size: 15px;
+	}
+	20% {
+		border-radius:30px 30px 30px 30px ;
+        background-color: rgb(218, 236, 131);
+        font-size: 16px;
+	}
+    40% {
+		border-radius:20px 30px 20px 30px ;
+        background-color: rgb(234, 166, 58);
+        font-size: 17px;
+	}
+    60% {
+		border-radius:20px 20px 20px 20px ;
+        background-color: rgb(243, 141, 16);
+        font-size: 15px;
+	}
+    80% {
+		border-radius:20px 30px 20px 30px ;
+        background-color: rgb(218, 236, 131);
+        font-size: 14px;
+	}
+    100% {
+		border-radius:30px 20px 30px 20px ;
+        background-color: #fff;
+        font-size: 13px;
+	}
+}
+
+.post a{
+    color: brown;
+}
+.mymessage{
+    text-align: right;
+}
+.user-in{
+    text-align:center;
+    border:1px solid darkgray;
+    background-color:gainsboro;
+    width: 30%;
+    margin: 15px auto;
+}
+.dmMain{
+    padding:30px;
+    background-color:gainsboro;
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px auto;
+}
+.dmpost{
+    padding: 30px;
+    background-color:gainsboro;
+    width: 50%;
+    margin: 0 auto;
+    margin-top: 20px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    border-radius: 20px;
+}
+
+.room-show{
+    background-color: #fde09a;
+    padding-bottom: 100px;
+}
+
+.user-enter{
+    text-align: center;
+}

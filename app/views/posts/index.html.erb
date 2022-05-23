@@ -1,0 +1,147 @@
+        <div class="ss-post">
+            <%= search_form_for @q  do |f| %>
+                <%= f.select :price_cont, [['~1000円', '~1000円、'], ['1000~1500円', '1000~1500円、'], ['1500円~', '1500円~、']], {include_blank: '値段'} %>
+                <%= f.select :spice_cont, [['甘口', '甘口'], ['チョイ辛', 'チョイ辛'], ['中辛', '中辛'], ['辛口', '辛口'], ['激辛', '激辛']] , {include_blank: '辛さ'} %>
+                <%= f.select :curry_cont, [['チキン系', 'チキン系'], ['キーマ系', 'キーマ系'], ['グリーン系', 'グリーン系'], ['豆系', '豆系'], ['マサラ系', 'マサラ系'], ['マトン系', 'マトン系']] , {include_blank: 'カレー'} %>
+                <%= f.select :nann_cont, [['ノーマル', 'ノーマル'], ['チーズ', 'チーズ'], ['チャパティ', 'チャパティ']] , {include_blank: 'ナン'} %>
+                <%= f.select :drink_cont, [['自由無料', '自由無料'], ['一枚無料', '一枚無料'], ['有料', '有料']], {include_blank: 'ナンおかわり'} %>
+                <%= f.submit "検索する" %></p>
+            <% end %>
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-warning btnsize" data-toggle="modal" data-target="#exampleModalCenter">
+                カレーを登録！
+            </button>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">なますて～</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <%= form_for @post do |f| %>
+                        <div class="post-new">
+                            <p><%= f.label :店名 %></p>
+                            <p><%= f.text_field :title, :size => 50 %></p>
+                            <p><%= f.label :image %></p>
+                            <p><%= f.file_field :image %></p>
+                            <%= f.select :price, [['~1000円', '~1000円,'], ['1000~1500円', '1000~1500円,'], ['1500円~', '1500円~,']], {include_blank: '値段'} %>
+                            <%= f.select :spice, [['甘口', '甘口'], ['チョイ辛', 'チョイ辛'], ['中辛', '中辛'], ['辛口', '辛口'], ['激辛', '激辛']] , {include_blank: '辛さ'} %>
+                            <%= f.select :curry, [['チキン系', 'チキン系'], ['キーマ系', 'キーマ系'], ['グリーン系', 'グリーン系'], ['豆系', '豆系'], ['マサラ系', 'マサラ系'], ['マトン系', 'マトン系']] , {include_blank: 'カレー'} %>
+                            <%= f.select :nann, [['ノーマル', 'ノーマル'], ['チーズ', 'チーズ'], ['チャパティ', 'チャパティ'], ['その他', 'その他']] , {include_blank: 'ナン'} %>
+                            <%= f.select :drink, [['自由無料', '自由無料'], ['一枚無料', '一枚無料'], ['有料', '有料']], {include_blank: 'ナンおかわり'} %>
+
+                            <p><%= f.label :ひとこと %></p>
+                            <p><%= f.text_field :contents, :size => 50 %></p>
+                        </div>
+                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <%= f.submit "登録する！" ,class:"btn btn-primary" %>
+                    </div>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+
+<div class="posts-container">
+    <% @posts.each do |t| %>
+        <div class="post">
+            UserName:<a href="/users/<%= t.user.id %>"><%= t.user.name %></a>
+            <% if t.title.blank? %>
+                <p>店名：登録なし</p>
+            <% else %>
+                <p>店名：<%= t.title %></p>
+            <% end %>
+            <!--カルーセルここから-->
+                <div id="carouselExampleIndicators" class="carousel slide yokobou" data-ride="carousel" data-interval="2000" >
+                <ol class="carousel-indicators yokobou">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active yokobou"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1" class=" yokobou"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2" class=" yokobou"></li>
+                </ol>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="img-img">
+                        <% if t.image.present? %>
+                            <%= image_tag t.image_url, size: '250x200'%>
+                        <% else %>
+                            <%= image_tag "nonono.png", size: '250x200' %>
+                        <% end %>
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="img-img">
+                        <% if t.nann == "ノーマル" %>
+                            <%= image_tag "naan.jpg", size: '250x200' %>
+                        <% elsif t.nann == "チーズ" %>
+                            <%= image_tag "cheese.jpg", size: '250x200' %>
+                        <% elsif t.nann == "チャパティ" %>
+                            <%= image_tag "chapa.jpg", size: '250x200' %>
+                        <% else %>
+                            <%= image_tag "nodata.png", size: '250x200' %>
+                        <% end %>
+                        </div>
+                    </div>
+                    <div class="carousel-item ">
+                        <div class="karasa">
+                            <p>辛さレベル</p>
+                            <% if t.spice == "甘口" %>
+                                <%= image_tag "11.png" , size: '250x100'%>
+                            <% elsif t.spice == "チョイ辛" %>
+                                <%= image_tag "22.png", size: '250x100' %>
+                            <% elsif t.spice == "中辛" %>
+                                <%= image_tag "33.png", size: '250x100' %>
+                            <% elsif t.spice == "辛口" %>
+                                <%= image_tag "44.png", size: '250x100' %>
+                            <% elsif t.spice == "激辛" %>
+                                <%= image_tag "55.png", size: '250x100' %>
+                            <% else %>
+                                <p>データなし</p>
+                                <p>食べてからのお楽しみ！</p>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            <!--ここまで-->
+            <% if user_signed_in? %>
+                <% if current_user.already_liked?(t) %>
+                    <%= link_to post_like_path(id: t.id, post_id: t.id), method: :delete do %>
+                        <i class="fas fa-heart fa-2x"></i><%= t.likes.count %>
+                    <% end %>
+                <% else %>
+                    <%= link_to post_likes_path(id: t.id, post_id: t.id), method: :post do %>
+                        <i class="far fa-heart fa-2x"></i><%= t.likes.count %>
+                    <% end %>
+                <% end %>
+            <% else %>
+                <i class="far fa-heart fa-2x"></i><%= t.likes.count %>
+            <% end %>
+            <p>
+                <%= t.price %>
+                <%= t.curry %>
+            </p>
+            <p>
+                <% if t.title.blank? %>
+                    ナンおかわり：不明
+                <% else %>
+                    ナンおかわり：<%= t.drink %>
+                <% end %>
+            </p>
+            <%= link_to post_path(t.id) do %>
+                <i class="fas fa-arrow-circle-right fa-2x"></i>
+            <% end %>
+            <% if user_signed_in? && current_user.id == t.user_id %>
+                <%= link_to post_path(t.id), method: :delete do %>
+                    <i class="fas fa-trash fa-2x"></i>
+                <% end %>
+            <% end %>
+        </div>
+    <% end %>
+</div>
