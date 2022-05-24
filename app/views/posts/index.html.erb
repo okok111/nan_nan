@@ -8,9 +8,15 @@
                 <%= f.submit "検索する" %></p>
             <% end %>
             <!-- Button trigger modal -->
-            <button type="button" class="btn btn-warning btnsize" data-toggle="modal" data-target="#exampleModalCenter">
-                カレーを登録！
-            </button>
+            <% if user_signed_in? %>
+                <button type="button" class="btn btn-warning btnsize" data-toggle="modal" data-target="#exampleModalCenter">
+                    カレーを登録！
+                </button>
+            <% else %>
+                <button type="button" class="btn btn-warning btnsize" onclick="clickEvent()" >
+                    カレーを登録！
+                </button>
+            <% end %>
         </div>
 
         <!-- Modal -->
@@ -27,7 +33,7 @@
                     <%= form_for @post do |f| %>
                         <div class="post-new">
                             <p><%= f.label :店名 %></p>
-                            <p><%= f.text_field :title, :size => 50 %></p>
+                            <p><%= f.text_field :title, :size => 30 %></p>
                             <p><%= f.label :image %></p>
                             <p><%= f.file_field :image %></p>
                             <%= f.select :price, [['~1000円', '~1000円,'], ['1000~1500円', '1000~1500円,'], ['1500円~', '1500円~,']], {include_blank: '値段'} %>
@@ -37,7 +43,7 @@
                             <%= f.select :drink, [['自由無料', '自由無料'], ['一枚無料', '一枚無料'], ['有料', '有料']], {include_blank: 'ナンおかわり'} %>
 
                             <p><%= f.label :ひとこと %></p>
-                            <p><%= f.text_field :contents, :size => 50 %></p>
+                            <p><%= f.text_field :contents, :size => 30 %></p>
                         </div>
                 </div>
                     <div class="modal-footer">
@@ -145,3 +151,9 @@
         </div>
     <% end %>
 </div>
+
+<script>
+    function clickEvent() {
+        alert('ログインして欲しいお');
+    }
+</script>
